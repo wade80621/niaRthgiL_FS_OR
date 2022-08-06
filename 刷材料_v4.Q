@@ -34,7 +34,7 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220806A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220806B":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
@@ -179,21 +179,22 @@ Function mainFunction()
 	Dim uAutoStoreStatus
 	uVerifyStatus=0 // 0: Wait
 	uAutoStoreStatus=0	// 0: Wait
+	uChkMapBreak = 0
 	gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
 	gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
 	gAutoSTimerInitial = Plugin.GetSysInfo.GetTime
 	gAutoSTimerCurrent = Plugin.GetSysInfo.GetTime
 	gSupport1TimerInit = Plugin.GetSysInfo.GetTime
 	gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
-	
 	If (gEnableFuzzy = 0) Then 
 		gDelayFuzzyPercent=0
 	End If
 	
-	uChkMapBreak = 0
-	// UseSupport 1 at beginning
-	Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))
-	Delay 100
+	// UseSupport 1 at beginning	
+	If (gSupport1Timer > 0) Then 
+		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))
+		Delay 100
+	End If
 	
 	While (1)
 		//**** Check not in City
