@@ -1,5 +1,10 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
+
+### 20220806
+刷材料_v4.Q [20220806A]
+1. Add support 1 and trigger timer
+
 ### [20220804A]
 1. Add First Github version
 	- 連點左鍵_v1.Q: 20220725A

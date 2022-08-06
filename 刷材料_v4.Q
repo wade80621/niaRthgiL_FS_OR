@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=a1ad0cf4-e753-4e31-971c-c8294353512e
 Description=刷材料_v4
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=1
@@ -34,22 +34,13 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220804A":1}=1 "Version"
-/* Note
-20220804A
-1. Add opthin to support groung trigger skill
-20220803A
-1. Check not in city for safe
-20220728B
-1. Add gEnAutoStore, will go home and store the items
-20220728A
-1. Add gEnableFuzzy and gDelayFuzzyPercent to add some fuzzy at delays
-*/
+UserVar gScriptVersion = DropList{"20220806A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
+UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
 UserVar gEnableFuzzy = DropList{"Enable":1 | "Disable":0}=1 "Fuzzy"
-UserVar gSkill1Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 1 Click Ground"
-UserVar gSkill2Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 2 Click Ground"
+UserVar gEnSkill1Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 1 Click Ground"
+UserVar gEnSkill2Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 2 Click Ground"
 
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
@@ -58,18 +49,20 @@ UserVar gFlyKey = "2" "Fly Key"
 UserVar gButterflyKey = "B" "Butterfly Key"
 UserVar gSkillKey1 = "E" "Skill 1 Key(0-9 A-Z)"
 UserVar gSkillKey2 = "E" "Skill 2 Key(0-9 A-Z)"
+UserVar gSupportKey1 = "R" "Support 1 Key(0-9 A-Z)"
 
 //**** Delay
 UserVar Delay__ = DropList{"*********":1}=1 "** Delay "
 UserVar gLoopDelay = 50 "Loop Delay(ms)"
-UserVar gFlyDelay = 500 "Fly Delay(ms)"
-UserVar gSkill1Delay = 50 "Skill 1 Delay(ms)"
+UserVar gFlyDelay = 550 "Fly Delay(ms)"
+UserVar gSkill1Delay = 75 "Skill 1 Delay(ms)"
 UserVar gSkill2Delay = 900 "Skill 2 Delay(ms)"
 UserVar gDelayFuzzyPercent = 25 "Delay Fuzzy(%)"
+UserVar gSupport1Timer = 0 "Support 1 Timer(s)(0 = Disable)"
 
 //**** Loop
 UserVar Loop__ = DropList{"*********":1}=1 "** Loop "
-UserVar gSkill1Loop = 5 "Skill 1 Loop"
+UserVar gSkill1Loop = 2 "Skill 1 Loop"
 UserVar gSkill2Loop = 0 "Skill 2 Loop"
 UserVar gLoopRecovery = 10 "Loop and Recovery"
 
@@ -90,7 +83,10 @@ cTrue = 1
 Dim cFalse
 cFalse = 0
 
-gCharacterXY = array(840, 520)
+gCharacterXY = array(840-50, 520)
+//** Support1Timer
+Dim gSupport1TimerInit
+Dim gSupport1TimerCurr
 
 //**** Chenk in City
 gChkMapCoordinate1 = array(1600, 46, 1645, 100)	// LUX, LUY, RDX, RDY	// 確認不再城內1（走歪無法判斷）
@@ -187,36 +183,45 @@ Function mainFunction()
 	gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
 	gAutoSTimerInitial = Plugin.GetSysInfo.GetTime
 	gAutoSTimerCurrent = Plugin.GetSysInfo.GetTime
+	gSupport1TimerInit = Plugin.GetSysInfo.GetTime
+	gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
 	
 	If (gEnableFuzzy = 0) Then 
 		gDelayFuzzyPercent=0
 	End If
 	
 	uChkMapBreak = 0
+	// UseSupport 1 at beginning
+	Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))
+	Delay 100
+	
 	While (1)
 		//**** Check not in City
-		While (uChkMapBreak = 0)
-			Delay 500
-			MoveTo gOpenMapXY(0), gOpenMapXY(1)
-			Delay 25
-			LeftClick 1
-			Delay 500
-			FindPic gChkMapCoordinate2(0),gChkMapCoordinate2(1),gChkMapCoordinate2(2),gChkMapCoordinate2(3),"Attachment:\盧恩米德加茲王國 首都普隆德拉.bmp",0.9,intX,intY
-			If intX > 0 And intY > 0 Then
-    			TracePrint "Found: 在普隆德拉城內!!!!"
-				Delay 1000
-    			uChkMapBreak = 0
-    		Else 
-    			TracePrint "Not Found: 不在普隆德拉，可安心掛機！"
-    			uChkMapBreak = 1
-			End If	
-			Delay 500
-			MoveTo gOpenMapXY(0), gOpenMapXY(1)
-			Delay 25
-			LeftClick 1
-			Delay 25
-		Wend
+		If (gEnCheckInCity = 1) Then 
+			While (uChkMapBreak = 0)
+				Delay 500
+				MoveTo gOpenMapXY(0), gOpenMapXY(1)
+				Delay 25
+				LeftClick 1
+				Delay 500
+				FindPic gChkMapCoordinate2(0),gChkMapCoordinate2(1),gChkMapCoordinate2(2),gChkMapCoordinate2(3),"Attachment:\盧恩米德加茲王國 首都普隆德拉.bmp",0.9,intX,intY
+				If intX > 0 And intY > 0 Then
+    				TracePrint "Found: 在普隆德拉城內!!!!"
+					Delay 1000
+    				uChkMapBreak = 0
+    			Else 
+    				TracePrint "Not Found: 不在普隆德拉，可安心掛機！"
+    				uChkMapBreak = 1
+				End If	
+				Delay 500
+				MoveTo gOpenMapXY(0), gOpenMapXY(1)
+				Delay 25
+				LeftClick 1
+				Delay 25
+			Wend	
+		End If
     	uChkMapBreak = 1
+    	
 		//**** Fly and Attack
 		For gLoopRecovery
 			Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gFlyKey))
@@ -224,10 +229,10 @@ Function mainFunction()
 			
 			For gSkill1Loop
 				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkillKey1))
-				If (gSkill1Ckick = 1) Then 
+				If (gEnSkill1Ckick = 1) Then 
 					Delay 25
 					MoveTo gCharacterXY(0), gCharacterXY(1)
-					Delay 25
+					Delay 50
 					LeftClick 1
 				End If
 				Delay CInt(gSkill1Delay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
@@ -235,7 +240,7 @@ Function mainFunction()
 			
 			For gSkill2Loop
 				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkil2Key1))
-				If (gSkill2Ckick = 1) Then 
+				If (gEnSkill2Ckick = 1) Then 
 					Delay 25
 					MoveTo gCharacterXY(0), gCharacterXY(1)
 					Delay 25
@@ -249,6 +254,19 @@ Function mainFunction()
 		//**** Recovery
 		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gRecoveryKey))
 		// Recovery ****
+		
+		//**** Support 1
+		If (gSupport1Timer > 0) Then 
+			gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
+			If ((gSupport1TimerCurr - gSupport1TimerInit) > (gSupport1Timer*1000)) Then 
+				Delay 600
+				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))	
+				Delay 100
+				gSupport1TimerInit = Plugin.GetSysInfo.GetTime
+				gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
+			End If	
+		End If
+		// Support 1 ****
 		
 		//**** Check Verify
 		If (gEnableVerify=1) Then 
