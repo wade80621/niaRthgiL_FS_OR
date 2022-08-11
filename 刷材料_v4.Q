@@ -112,7 +112,7 @@ Dim gVerifyTimerInitial
 Dim gVerifyTimerCurrent
 // Verify ****
 
-//**** AutoMoney
+//**** Auto Store
 //** Coordinate
 // gCapraXY = array(520, 810)
 gCapraXY = array(520, 675)
