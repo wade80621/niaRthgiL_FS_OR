@@ -1,6 +1,12 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220812A
+DropItem_v1.Q [20220812A]
+1. Add script to auto drop the item when drilling.
+刷材料_v4.Q [20220812A]
+1. Update some string
+
 ## 20220811A
 霸肋門附魔_v1.Q v[20220809A]
 1. Add script 霸肋門附魔_v1.Q

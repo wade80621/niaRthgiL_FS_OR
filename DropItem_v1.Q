@@ -8,12 +8,12 @@ StopHotkey=122
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=a1ad0cf4-e753-4e31-971c-c8294353512e
-Description=刷材料_v4
-Enable=0
+MacroID=dc0a3cb2-3e40-4eb8-a2f0-f403b88202a3
+Description=DropItem_v1
+Enable=1
 AutoRun=0
 [Repeat]
-Type=1
+Type=0
 Number=1
 [SetupUI]
 Type=2
@@ -37,45 +37,7 @@ UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
 UserVar gScriptVersion = DropList{"20220812A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
-UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
-UserVar gEnableFuzzy = DropList{"Enable":1 | "Disable":0}=1 "Fuzzy"
-UserVar gEnSkill1Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 1 Click Ground"
-UserVar gEnSkill2Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 2 Click Ground"
-
-//**** Keys
-UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
-UserVar gRecoveryKey = "1" "Recovery Key(0-9 A-Z)"
-UserVar gFlyKey = "2" "Fly Key(0-9 A-Z)"
-UserVar gButterflyKey = "B" "Butterfly Key(0-9 A-Z)"
-UserVar gSkillKey1 = "E" "Skill 1 Key(0-9 A-Z)"
-UserVar gSkillKey2 = "E" "Skill 2 Key(0-9 A-Z)"
-UserVar gSupportKey1 = "R" "Support 1 Key(0-9 A-Z)"
-
-//**** Delay
-UserVar Delay__ = DropList{"*********":1}=1 "** Delay "
-UserVar gLoopDelay = 50 "Loop Delay(ms)"
-UserVar gFlyDelay = 550 "Fly Delay(ms)"
-UserVar gSkill1Delay = 75 "Skill 1 Delay(ms)"
-UserVar gSkill2Delay = 900 "Skill 2 Delay(ms)"
-UserVar gDelayFuzzyPercent = 25 "Delay Fuzzy(%)"
-UserVar gSupport1Timer = 0 "Support 1 Timer(s)(0 = Disable)"
-
-//**** Loop
-UserVar Loop__ = DropList{"*********":1}=1 "** Loop "
-UserVar gSkill1Loop = 2 "Skill 1 Loop"
-UserVar gSkill2Loop = 0 "Skill 2 Loop"
-UserVar gLoopRecovery = 10 "Loop and Recovery"
-
-//**** Verify
-UserVar Verify__ = DropList{"*********":1}=1 "** Verify "
-UserVar gEnableVerify = DropList{"Enable":1 | "Disable":0}=1 "Enable Verify"
-UserVar gVerifyTime = 1 "Check Veritication every n min"
-
-//**** Auto Store
-UserVar AutoStore__ = DropList{"*********":1}=1 "** AutoStore "
-UserVar gEnAutoStore = DropList{"Enable":1 | "Disable":0}=1 "Enable Auto Store"
-UserVar gAutoStoreTime = 1 "Auto Store every n min"
-UserVar gAutoStoreNum = 2 "Auto Store n Items"
+UserVar gDropItemNum = 2 "Drop n Items"
 
 //******** Parameters
 Dim cTrue
@@ -83,52 +45,11 @@ cTrue = 1
 Dim cFalse
 cFalse = 0
 
-gCharacterXY = array(840-50, 520)
-//** Support1Timer
-Dim gSupport1TimerInit
-Dim gSupport1TimerCurr
-
-//**** Chenk in City
-gChkMapCoordinate1 = array(1600, 46, 1645, 100)	// LUX, LUY, RDX, RDY	// 確認不再城內1（走歪無法判斷）
-gOpenMapXY = array(1634, 181)
-gChkMapCoordinate2 = array(1136, 221, 1332, 237)	// LUX, LUY, RDX, RDY	// 確認不再城內2
-// Chenk in City ****
-
-//**** Verify
 //** Coordinate
-gDelta = 1
-gBackButtomXY = array(1507, 123)
-gStringTryCount = 10
-gString1Coordinate = array(23-gDelta, 386-gDelta, 93+gDelta, 396+gDelta)	// LUX, LUY, RDX, RDY	// String1: 外掛驗證裝置
-// gString2Coordinate = array(21-gDelta, 212-gDelta, 163+gDelta, 222+gDelta)	// LUX, LUY, RDX, RDY	// String2: 您現在不需要進行驗證
-gString3Coordinate = array(21-gDelta, 212-gDelta, 127+gDelta, 222+gDelta)	// LUX, LUY, RDX, RDY	// String3: 您好請您輸入外掛驗證
-gVerifyCodeCoordinate = array(75-gDelta, 303-gDelta, 109+gDelta, 311+gDelta)	// LUX, LUY, RDX, RDY
-gVCodeNumDelta = 6
-gVCodeNumTryCount = 1
-gVCodeNum = array(75-gDelta, 303-gDelta, 79+gDelta, 311+gDelta)	// LUX, LUY, RDX, RDY
-
-//** Timer
-Dim gVerifyTimerInitial
-Dim gVerifyTimerCurrent
-// Verify ****
-
-//**** Auto Store
-//** Coordinate
-// gCapraXY = array(520, 810)
-gCapraXY = array(520, 675)
-//gTranNpcXY = array(690, 420)
-gTranNpcXY = array(690, 260)
 gBagPage3XY = array(620, 970)
 gBagItem1XY = array(665, 905)
 gBagItem2XY = array(695, 905)
-gStorehouseXY = array(740, 740)
-gStorehouseCloseXY = array(850, 860)
-
-//** Timer
-Dim gAutoSTimerInitial
-Dim gAutoSTimerCurrent
-
-//AutoMoney ****
+gDropGroundXY = array(740, 740)
 
 Function keyLoops(uKey, uLoops, uDelay)
 	For uLoops
@@ -173,268 +94,12 @@ Function findCoordinateNum(uLUX, uLUY, uRDX, uRDY, uNum)
 End Function
 
 Function mainFunction()
-	Dim uWBreak
-	Dim uChkMapBreak
-	Dim uVerifyStatus
-	Dim uAutoStoreStatus
-	uVerifyStatus=0 // 0: Wait
-	uAutoStoreStatus=0	// 0: Wait
-	uChkMapBreak = 0
-	gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
-	gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
-	gAutoSTimerInitial = Plugin.GetSysInfo.GetTime
-	gAutoSTimerCurrent = Plugin.GetSysInfo.GetTime
-	gSupport1TimerInit = Plugin.GetSysInfo.GetTime
-	gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
-	If (gEnableFuzzy = 0) Then 
-		gDelayFuzzyPercent=0
-	End If
-	
-	// UseSupport 1 at beginning	
-	If (gSupport1Timer > 0) Then 
-		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))
+	// Store Item * gAutoStoreNum
+	For gDropItemNum
+		Call dropAtoB(gBagItem1XY(0), gBagItem1XY(1), gDropGroundXY(0), gDropGroundXY(1))
+		Call Plugin.Bkgnd.KeyPress(hwnd, 13)
 		Delay 100
-	End If
-	
-	While (1)
-		//**** Check not in City
-		If (gEnCheckInCity = 1) Then 
-			While (uChkMapBreak = 0)
-				Delay 500
-				MoveTo gOpenMapXY(0), gOpenMapXY(1)
-				Delay 25
-				LeftClick 1
-				Delay 500
-				FindPic gChkMapCoordinate2(0),gChkMapCoordinate2(1),gChkMapCoordinate2(2),gChkMapCoordinate2(3),"Attachment:\盧恩米德加茲王國 首都普隆德拉.bmp",0.9,intX,intY
-				If intX > 0 And intY > 0 Then
-    				TracePrint "Found: 在普隆德拉城內!!!!"
-					Delay 1000
-    				uChkMapBreak = 0
-    			Else 
-    				TracePrint "Not Found: 不在普隆德拉，可安心掛機！"
-    				uChkMapBreak = 1
-				End If	
-				Delay 500
-				MoveTo gOpenMapXY(0), gOpenMapXY(1)
-				Delay 25
-				LeftClick 1
-				Delay 25
-			Wend	
-		End If
-    	uChkMapBreak = 1
-    	
-		//**** Fly and Attack
-		For gLoopRecovery
-			Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gFlyKey))
-			Delay CInt(gFlyDelay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
-			
-			For gSkill1Loop
-				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkillKey1))
-				If (gEnSkill1Ckick = 1) Then 
-					Delay 25
-					MoveTo gCharacterXY(0), gCharacterXY(1)
-					Delay 50
-					LeftClick 1
-				End If
-				Delay CInt(gSkill1Delay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
-			Next
-			
-			For gSkill2Loop
-				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkil2Key1))
-				If (gEnSkill2Ckick = 1) Then 
-					Delay 25
-					MoveTo gCharacterXY(0), gCharacterXY(1)
-					Delay 25
-					LeftClick 1
-				End If
-				Delay CInt(gSkill2Delay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
-			Next
-		Next
-		// Fly and Attack ****
-
-		//**** Recovery
-		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gRecoveryKey))
-		// Recovery ****
-		
-		//**** Support 1
-		If (gSupport1Timer > 0) Then 
-			gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
-			If ((gSupport1TimerCurr - gSupport1TimerInit) > (gSupport1Timer*1000)) Then 
-				Delay 600
-				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))	
-				Delay 100
-				gSupport1TimerInit = Plugin.GetSysInfo.GetTime
-				gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
-			End If	
-		End If
-		// Support 1 ****
-		
-		//**** Check Verify
-		If (gEnableVerify=1) Then 
-			gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
-			If ((gVerifyTimerCurrent - gVerifyTimerInitial) >= (gVerifyTime * 60 * 1000)) Then 
-    			TracePrint "Check Verify."
-				uVerifyStatus = 1
-			End If
-		End If
-		
-		If (uVerifyStatus>0) Then 
-			//** Click "Back" Buttom
-			MoveTo gBackButtomXY(0), gBackButtomXY(1)
-			Delay 25
-			LeftClick 1
-			uVerifyStatus=2	// 2: To find "外掛驗證裝置"
-			Delay 250
-			//** 尋找"外掛驗證裝置"
-			If (uVerifyStatus = 2) Then 
-				uWBreak=gStringTryCount
-				While(uWBreak>0)
-					FindPic gString1Coordinate(0),gString1Coordinate(1),gString1Coordinate(2),gString1Coordinate(3),"Attachment:\外掛驗證裝置.bmp",0.9,intX,intY
-					If intX > 0 And intY > 0 Then
-    					TracePrint "Found: 外掛驗證裝置."
-    					uWBreak = 0
-    					uVerifyStatus = 3 // 3: Click "Enter"
-    				Else 
-    					TracePrint "Not Found: 外掛驗證裝置."
-					End If	
-					Delay 25
-					uWBreak = uWBreak - 1
-				Wend
-			End If
-			
-			If (uVerifyStatus = 3) Then 
-				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
-				uVerifyStatus = 4 // 4: To find "您好請您輸入外掛驗證"
-			End If
-			
-			//** 尋找"您好請您輸入外掛驗證"
-			If (uVerifyStatus = 4) Then 
-				uWBreak=gStringTryCount
-				While(uWBreak>0)
-					FindPic gString3Coordinate(0),gString3Coordinate(1),gString3Coordinate(2),gString3Coordinate(3),"Attachment:\您好請您輸入外掛驗證.bmp",0.9,intX,intY
-					If intX > 0 And intY > 0 Then
-    					TracePrint "Found: 您好請您輸入外掛驗證."
-    					uWBreak=0
-    					uVerifyStatus = 5 // 5: To Decode the code"
-    				Else 
-    					TracePrint "Not Found: 您好請您輸入外掛驗證."
-					End If
-					Delay 25
-					uWBreak = uWBreak - 1
-					If (uWBreak = 0) Then 
-						Call Plugin.Bkgnd.KeyPress(hwnd, 13)
-						uVerifyStatus=0
-						gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
-						gVerifyTimerCurrent = gVerifyTimerInitial
-					End If
-				Wend
-			End If
-			
-			//** Decode the code
-			If (uVerifyStatus = 5) Then 
-				Dim uPlaceIndex
-				Dim uNumIndex
-				Dim uResult
-				Dim uLUX
-				Dim uLUY
-				Dim uRDX
-				Dim uRDY
-				
-				For (6)
-					uLUX = gVCodeNum(0) + uPlaceIndex * gVCodeNumDelta
-					uLUY = gVCodeNum(1)
-					uRDX = gVCodeNum(2) + uPlaceIndex * gVCodeNumDelta
-					uRDY = gVCodeNum(3)
-					uNumIndex=0
-					For (10)
-						uResult = findCoordinateNum(uLUX, uLUY, uRDX, uRDY, uNumIndex)
-						If (uResult = cTrue) Then 
-							TracePrint "Enter Number "+CStr(uNumIndex)
-							Call Plugin.Bkgnd.KeyPress(hwnd, Asc(uNumIndex))
-							Exit For
-						End If
-						uNumIndex=uNumIndex+1
-					Next
-					uPlaceIndex=uPlaceIndex+1
-				Next
-				Delay 50
-				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
-				Delay 150
-				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
-				Delay 50
-				uVerifyStatus=0
-				gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
-				gVerifyTimerCurrent = gVerifyTimerInitial
-			End If
-			
-			//** Timeout(2 * gVerifyTime min)
-			gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
-			If ((gVerifyTimerCurrent - gVerifyTimerInitial) >= (2 * gVerifyTime * 60 * 1000)) Then 
-				uVerifyStatus=0
-				gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
-				gVerifyTimerCurrent = gVerifyTimerInitial
-			End If
-		End If
-		// Check Verify ****
-		
-		//**** Auto Store
-		If (gEnAutoStore=1) Then 
-			gAutoSTimerCurrent = Plugin.GetSysInfo.GetTime
-			If ((gAutoSTimerCurrent - gAutoSTimerInitial) >= (gAutoStoreTime * 60 * 1000)) Then 
-    			TracePrint "Auto Store."
-				uAutoStoreStatus = 1
-			End If
-		End If
-		If (uAutoStoreStatus = 1) Then 
-			// Go Home and Sit
-			Delay 500
-			Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gButterflyKey))
-			Delay 5000
-			Call Plugin.Bkgnd.KeyPress(hwnd, 45)
-			Delay 1000
-			
-			// Open Store House
-			MoveTo gCapraXY(0), gCapraXY(1)
-			Delay 100
-			LeftClick 1
-			Delay 100
-			Call keyLoops(13, 2, 500)
-			
-			// Switch to Bag page 3
-			MoveTo gBagPage3XY(0), gBagPage3XY(1)
-			Delay 100
-			LeftClick 1
-			Delay 250
-			
-			// Store Item * gAutoStoreNum
-			For gAutoStoreNum
-				Call dropAtoB(gBagItem1XY(0), gBagItem1XY(1), gStorehouseXY(0), gStorehouseXY(1))
-				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
-				Delay 100
-			Next
-			
-			// Close Store House
-			MoveTo gStorehouseCloseXY(0), gStorehouseCloseXY(1)
-			Delay 100
-			LeftClick 1
-			Delay 250
-			
-			// Go Back to Map
-			MoveTo gTranNpcXY(0), gTranNpcXY(1)
-			Delay 100
-			LeftClick 1
-			Delay 500
-			Call keyLoops(13, 5, 500)
-			Delay 1500
-			uAutoStoreStatus = 0
-			gAutoSTimerInitial = Plugin.GetSysInfo.GetTime
-			gAutoSTimerCurrent = gAutoSTimerInitial
-    		uChkMapBreak = 0
-		End If
-		// Auto Money ****
-		
-		Delay CInt(gLoopDelay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
-	Wend
+	Next
 End Function
 
 
