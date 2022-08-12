@@ -15,15 +15,15 @@ DropItem_v1.Q [20220812A]
 霸肋門附魔_v1.Q v[20220809A]
 1. Add script 霸肋門附魔_v1.Q
 
-### 20220806B
+## 20220806B
 刷材料_v4.Q v[20220806B]
 1. Add support 1 and trigger timer
 
-### 20220806
+## 20220806A
 刷材料_v4.Q v[20220806A]
 1. Add support 1 and trigger timer
 
-### [20220804A]
+## 20220804A
 1. Add First Github version
 	- 連點左鍵_v1.Q: v[20220725A]
     - Autoloot_v1.Q: v[20220804A]
