@@ -29,7 +29,7 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220804A":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220813A":1}=1 "Version"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
 UserVar gEnLootType6=DropList{"Enable":1|"Disable":0}=1 "Enable LootType 6"
@@ -40,6 +40,7 @@ UserVar gEnLootIdGroup_Evalution=DropList{"Enable":1|"Disable":0}=1 "裝備評鑑"
 UserVar gEnLootIdGroup_Remorse=DropList{"Enable":1|"Disable":0}=1 "副本：悔恨"
 UserVar gEnLootIdGroup_EDDA=DropList{"Enable":1|"Disable":0}=1 "副本：EDDA"
 UserVar gEnLootIdGroup_AncientCity=DropList{"Enable":1|"Disable":0}=1 "副本：古城挑戰"
+UserVar gEnLootIdGroup_Bossnia=DropList{"Enable":1|"Disable":0}=1 "副本：波士尼亞"
 UserVar gEnLootIdGroup_MVP=DropList{"Enable":1|"Disable":0}=1 "MVP"
 UserVar gEnLootIdGroup_202207=DropList{"Enable":1|"Disable":0}=1 "七彩領域碎片(202207新增)"
 UserVar gEnLootIdGroup_ClockTower=DropList{"Enable":1|"Disable":0}=1 "材料：鐘塔"
@@ -213,12 +214,32 @@ Function mainFunction()
 		Call keyInLootId(uarLootId, 2)
 	End If
 	
+	//** 波士尼亞
+	//** @alootid +6697 幻化系統兌換券
+	//** @alootid +40306 詛咒媒介
+	//** @alootid +12246 具有魔力的卡片冊子
+	//** @alootid +616 卡冊
+	//** @alootid +607 天地樹果實
+	//** @alootid +751 俄賽里斯娃娃
+	//** @alootid +6423 海神之憤怒
+	//** @alootid +12612~12616 錢袋
+	//** @alootid +7211 羅誡塔時頭碎片
+	//** @alootid +7108 盾牌碎片
+	//** @alootid +7036 卡倫之牙
+	//** @alootid +7113 破碎法勞王象徵
+	//** @alootid +7754 破碎的王冠
+	//** @alootid +7020 惡夢之石
+	If(gEnLootIdGroup_Bossnia=1)
+		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 12612, 12613, 12614, 12615, 12616, 7211, 7108, 7036, 7113, 7754, 7020)
+		Call keyInLootId(uarLootId, 17)
+	End If
+	
 	//** @alootid +6697 幻化系統兌換券
 	//** @alootid +40306 詛咒媒介
 	//** @alootid +12246 具有魔力的卡片冊子
 	//** @alootid +607 天地樹果實
 	If(gEnLootIdGroup_MVP=1)
-		uarLootId = array(6697, 40306, 12246, 607)
+		uarLootId = array(6697, 40306, 12246, 616, 607)
 		Call keyInLootId(uarLootId, 4)
 	End If
 	

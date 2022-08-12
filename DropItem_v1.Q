@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=dc0a3cb2-3e40-4eb8-a2f0-f403b88202a3
 Description=DropItem_v1
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0

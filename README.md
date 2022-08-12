@@ -1,6 +1,10 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220813A
+Autoloot_v1.Q [20220813A]
+1. Add gEnLootIdGroup_Bossnia(波士尼亞)
+
 ## 20220812A
 DropItem_v1.Q [20220812A]
 1. Add script to auto drop the item when drilling.
