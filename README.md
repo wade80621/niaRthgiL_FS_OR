@@ -1,5 +1,8 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
+## 20220813B
+Autoloot_v1.Q [20220813B]
+1. Optimize gEnLootIdGroup_Bossnia
 
 ## 20220813A
 Autoloot_v1.Q [20220813A]

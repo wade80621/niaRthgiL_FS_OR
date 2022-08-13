@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=856fcb21-747d-46b2-83ea-8a5a51f88241
 Description=Autoloot_v1
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=0
@@ -29,7 +29,7 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220813A":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220813B":1}=1 "Version"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
 UserVar gEnLootType6=DropList{"Enable":1|"Disable":0}=1 "Enable LootType 6"
@@ -222,16 +222,16 @@ Function mainFunction()
 	//** @alootid +607 天地樹果實
 	//** @alootid +751 俄賽里斯娃娃
 	//** @alootid +6423 海神之憤怒
-	//** @alootid +12612~12616 錢袋
 	//** @alootid +7211 羅誡塔時頭碎片
 	//** @alootid +7108 盾牌碎片
 	//** @alootid +7036 卡倫之牙
 	//** @alootid +7113 破碎法勞王象徵
 	//** @alootid +7754 破碎的王冠
 	//** @alootid +7020 惡夢之石
+	//** @alootid +12612~12621 錢袋
 	If(gEnLootIdGroup_Bossnia=1)
-		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 12612, 12613, 12614, 12615, 12616, 7211, 7108, 7036, 7113, 7754, 7020)
-		Call keyInLootId(uarLootId, 17)
+		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 12616, 12617, 12618, 12619, 12620, 12621, 12612, 12613, 12614, 12615)
+		Call keyInLootId(uarLootId, 22)
 	End If
 	
 	//** @alootid +6697 幻化系統兌換券
@@ -240,7 +240,7 @@ Function mainFunction()
 	//** @alootid +607 天地樹果實
 	If(gEnLootIdGroup_MVP=1)
 		uarLootId = array(6697, 40306, 12246, 616, 607)
-		Call keyInLootId(uarLootId, 4)
+		Call keyInLootId(uarLootId, 5)
 	End If
 	
 	//** 2022/7月新活-七彩領域碎片： @alootid +40334~40340
