@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=856fcb21-747d-46b2-83ea-8a5a51f88241
 Description=Autoloot_v1
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0
@@ -29,7 +29,7 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220813B":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220814A":1}=1 "Version"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
 UserVar gEnLootType6=DropList{"Enable":1|"Disable":0}=1 "Enable LootType 6"
@@ -37,6 +37,7 @@ UserVar gEnLootType3=DropList{"Enable":1|"Disable":0}=1 "Enable LootType 3"
 UserVar gEnLootIdGroup_MoneyZ=DropList{"Enable":1|"Disable":0}=1 "賺錢：Z"
 UserVar gEnLootIdGroup_MoneyP=DropList{"Enable":1|"Disable":0}=1 "賺錢：P"
 UserVar gEnLootIdGroup_Evalution=DropList{"Enable":1|"Disable":0}=1 "裝備評鑑"
+UserVar gEnLootIdGroup_Weekend=DropList{"Enable":1|"Disable":0}=1 "副本：週末副本(0236)"
 UserVar gEnLootIdGroup_Remorse=DropList{"Enable":1|"Disable":0}=1 "副本：悔恨"
 UserVar gEnLootIdGroup_EDDA=DropList{"Enable":1|"Disable":0}=1 "副本：EDDA"
 UserVar gEnLootIdGroup_AncientCity=DropList{"Enable":1|"Disable":0}=1 "副本：古城挑戰"
@@ -138,6 +139,13 @@ Function keyInLootId(uarLootId, uIdNumbers)
 	Wend	
 End Function
 
+Function keyInLootType(uarTypeId)
+		Call cmd_autoloottype()
+		KeyPress "Num +", 1
+		Call keyInNumber(uarTypeId)
+		KeyPress "Enter", 1
+End Function
+
 Function mainFunction()
 	Dim uIndex
 	TracePrint gEnAutoloot
@@ -150,18 +158,12 @@ Function mainFunction()
 	
 	//** @autoloottype +6 卡片
 	If(gEnLootType6=1)
-		Call cmd_autoloottype()
-		KeyPress "Num +", 1
-		Call keyInNumber(6)
-		KeyPress "Enter", 1
+		keyInLootType(6)
 	End If
 	
 	//** @autoloottype +3 戰利品
 	If(gEnLootType3=1)
-		Call cmd_autoloottype()
-		KeyPress "Num +", 1
-		Call keyInNumber(3)
-		KeyPress "Enter", 1
+		keyInLootType(3)
 	End If
 	
 	//**** Add Loot ID
@@ -189,6 +191,14 @@ Function mainFunction()
 	If(gEnLootIdGroup_Evalution=1)
 		uarLootId = array(1000322, 720, 719)
 		Call keyInLootId(uarLootId, 3)
+	End If
+	
+	//** 0236
+	If(gEnLootIdGroup_Weekend=1)
+		keyInLootType(0)
+		keyInLootType(2)
+		keyInLootType(3)
+		keyInLootType(6)
 	End If
 	
 	//** 悔恨副本

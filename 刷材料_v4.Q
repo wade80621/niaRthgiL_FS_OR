@@ -34,13 +34,15 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220812A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220814A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
 UserVar gEnableFuzzy = DropList{"Enable":1 | "Disable":0}=1 "Fuzzy"
 UserVar gEnSkill1Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 1 Click Ground"
 UserVar gEnSkill2Ckick = DropList{"Enable":1 | "Disable":0}=1 "Skill 2 Click Ground"
+UserVar gTrigSupport1AtBeginning = DropList{"Enable":1 | "Disable":0}=1 "Trig support 1 at beginning"
+UserVar gTrigSupport2AtBeginning = DropList{"Enable":1 | "Disable":0}=1 "Trig support 2 at beginning"
 
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
@@ -50,6 +52,7 @@ UserVar gButterflyKey = "B" "Butterfly Key(0-9 A-Z)"
 UserVar gSkillKey1 = "E" "Skill 1 Key(0-9 A-Z)"
 UserVar gSkillKey2 = "E" "Skill 2 Key(0-9 A-Z)"
 UserVar gSupportKey1 = "R" "Support 1 Key(0-9 A-Z)"
+UserVar gSupportKey2 = "M" "Support 2 Key(0-9 A-Z)"
 
 //**** Delay
 UserVar Delay__ = DropList{"*********":1}=1 "** Delay "
@@ -59,6 +62,7 @@ UserVar gSkill1Delay = 75 "Skill 1 Delay(ms)"
 UserVar gSkill2Delay = 900 "Skill 2 Delay(ms)"
 UserVar gDelayFuzzyPercent = 25 "Delay Fuzzy(%)"
 UserVar gSupport1Timer = 0 "Support 1 Timer(s)(0 = Disable)"
+UserVar gSupport2Timer = 0 "Support 2 Timer(s)(0 = Disable)"
 
 //**** Loop
 UserVar Loop__ = DropList{"*********":1}=1 "** Loop "
@@ -84,9 +88,11 @@ Dim cFalse
 cFalse = 0
 
 gCharacterXY = array(840-50, 520)
-//** Support1Timer
+//** SupportTimer
 Dim gSupport1TimerInit
 Dim gSupport1TimerCurr
+Dim gSupport2TimerInit
+Dim gSupport2TimerCurr
 
 //**** Chenk in City
 gChkMapCoordinate1 = array(1600, 46, 1645, 100)	// LUX, LUY, RDX, RDY	// 確認不再城內1（走歪無法判斷）
@@ -172,27 +178,38 @@ Function findCoordinateNum(uLUX, uLUY, uRDX, uRDY, uNum)
 	findCoordinateNum = uResult
 End Function
 
-Function mainFunction()
-	Dim uWBreak
-	Dim uChkMapBreak
-	Dim uVerifyStatus
-	Dim uAutoStoreStatus
-	uVerifyStatus=0 // 0: Wait
-	uAutoStoreStatus=0	// 0: Wait
-	uChkMapBreak = 0
+Function initialTimer()
 	gVerifyTimerInitial = Plugin.GetSysInfo.GetTime
 	gVerifyTimerCurrent = Plugin.GetSysInfo.GetTime
 	gAutoSTimerInitial = Plugin.GetSysInfo.GetTime
 	gAutoSTimerCurrent = Plugin.GetSysInfo.GetTime
 	gSupport1TimerInit = Plugin.GetSysInfo.GetTime
 	gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
+	gSupport2TimerInit = Plugin.GetSysInfo.GetTime
+	gSupport2TimerCurr = Plugin.GetSysInfo.GetTime
+End Function
+
+Function mainFunction()
+	Dim uWBreak
+	Dim uChkMapBreak
+	Dim uVerifyStatus
+	Dim uAutoStoreStatus
+	Call initialTimer()
+	uVerifyStatus=0 // 0: Wait
+	uAutoStoreStatus=0	// 0: Wait
+	uChkMapBreak = 0
 	If (gEnableFuzzy = 0) Then 
 		gDelayFuzzyPercent=0
 	End If
 	
-	// UseSupport 1 at beginning	
-	If (gSupport1Timer > 0) Then 
+	// UseSupport at beginning	
+	If ( (gSupport1Timer > 0) and (gTrigSupport1AtBeginning > 0) ) Then 
 		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey1))
+		Delay 100
+	End If
+	
+	If ( (gSupport2Timer > 0) and (gTrigSupport2AtBeginning > 0) ) Then 
+		Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey2))
 		Delay 100
 	End If
 	
@@ -268,6 +285,19 @@ Function mainFunction()
 			End If	
 		End If
 		// Support 1 ****
+		
+		//**** Support 2
+		If (gSupport2Timer > 0) Then 
+			gSupport2TimerCurr = Plugin.GetSysInfo.GetTime
+			If ((gSupport2TimerCurr - gSupport2TimerInit) > (gSupport2Timer*1000)) Then 
+				Delay 600
+				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSupportKey2))	
+				Delay 100
+				gSupport2TimerInit = Plugin.GetSysInfo.GetTime
+				gSupport2TimerCurr = Plugin.GetSysInfo.GetTime
+			End If	
+		End If
+		// Support 2 ****
 		
 		//**** Check Verify
 		If (gEnableVerify=1) Then 

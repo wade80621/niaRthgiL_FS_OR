@@ -1,5 +1,13 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
+
+## 20220814A
+Autoloot_v1.Q [20220814A]
+1. Add gEnLootIdGroup_Weekend, the enable loot type 0 2 3 6
+刷材料_v4.Q [20220814A]
+1. Add support 2 and trigger timer
+2. Add gTrigSupport1AtBeginning and gTrigSupport2AtBeginning to toggle the support at beginning
+
 ## 20220813B
 Autoloot_v1.Q [20220813B]
 1. Optimize gEnLootIdGroup_Bossnia
