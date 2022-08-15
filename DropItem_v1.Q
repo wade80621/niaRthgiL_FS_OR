@@ -28,13 +28,14 @@ UEsDBBQAAgAIAOx49VQTzuUSLQAAAMYAAAAFABEAMC5ibXBVVA0AB7pr2WK7a9liuWvZYnPyPcYAAWZA
 
 [Script]
 //******** Windows
+windowShift = array(100, 0)
 hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
-Call Plugin.Window.Move(hwnd, 0, 0)
+Call Plugin.Window.Move(hwnd, 0+windowShift(0), 0+windowShift(1))
 
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220812A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220815A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gDropItemNum = 2 "Drop n Items"
@@ -46,10 +47,10 @@ Dim cFalse
 cFalse = 0
 
 //** Coordinate
-gBagPage3XY = array(620, 970)
-gBagItem1XY = array(665, 905)
-gBagItem2XY = array(695, 905)
-gDropGroundXY = array(740, 740)
+gBagPage3XY = array(620+windowShift(0), 970+windowShift(1))
+gBagItem1XY = array(665+windowShift(0), 905+windowShift(1))
+gBagItem2XY = array(695+windowShift(0), 905+windowShift(1))
+gDropGroundXY = array(740+windowShift(0), 740+windowShift(1))
 
 Function keyLoops(uKey, uLoops, uDelay)
 	For uLoops

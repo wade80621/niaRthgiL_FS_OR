@@ -10,10 +10,10 @@ RunOnce=1
 EnableWindow=
 MacroID=a1ad0cf4-e753-4e31-971c-c8294353512e
 Description=刷材料_v4
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
-Type=1
+Type=0
 Number=1
 [SetupUI]
 Type=2
@@ -34,7 +34,7 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220814A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220815B":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
@@ -66,6 +66,7 @@ UserVar gSupport2Timer = 0 "Support 2 Timer(s)(0 = Disable)"
 
 //**** Loop
 UserVar Loop__ = DropList{"*********":1}=1 "** Loop "
+UserVar gScriptLoopTime = 60 "Script Loop Time(min)(0 = Disable)"
 UserVar gSkill1Loop = 2 "Skill 1 Loop"
 UserVar gSkill2Loop = 0 "Skill 2 Loop"
 UserVar gLoopRecovery = 10 "Loop and Recovery"
@@ -93,6 +94,8 @@ Dim gSupport1TimerInit
 Dim gSupport1TimerCurr
 Dim gSupport2TimerInit
 Dim gSupport2TimerCurr
+Dim gScriptLoopTimerInit
+Dim gScriptLoopTimerCurr
 
 //**** Chenk in City
 gChkMapCoordinate1 = array(1600, 46, 1645, 100)	// LUX, LUY, RDX, RDY	// 確認不再城內1（走歪無法判斷）
@@ -187,6 +190,8 @@ Function initialTimer()
 	gSupport1TimerCurr = Plugin.GetSysInfo.GetTime
 	gSupport2TimerInit = Plugin.GetSysInfo.GetTime
 	gSupport2TimerCurr = Plugin.GetSysInfo.GetTime
+	gScriptLoopTimerInit = Plugin.GetSysInfo.GetTime
+	gScriptLoopTimerCurr = Plugin.GetSysInfo.GetTime
 End Function
 
 Function mainFunction()
@@ -464,6 +469,17 @@ Function mainFunction()
 		// Auto Money ****
 		
 		Delay CInt(gLoopDelay * (100 + (Rnd * gDelayFuzzyPercent * 2 - gDelayFuzzyPercent)) / 100)
+		If (gScriptLoopTime > 0) Then 
+		 	gScriptLoopTimerCurr = Plugin.GetSysInfo.GetTime
+			If ((gScriptLoopTimerCurr - gScriptLoopTimerInit) > (gScriptLoopTime * 60 * 1000)) Then 
+			 	// Stop and go home and fly
+				Delay 500
+				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gButterflyKey))
+				Delay 5000
+				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gFlyKey))
+				ExitScript
+			End If		
+		End If
 	Wend
 End Function
 

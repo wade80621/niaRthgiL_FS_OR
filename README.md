@@ -1,6 +1,12 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220815B
+刷材料_v4.Q [20220815B]
+1. Add script timer, will go home and stop the script when timeout.
+DropItem_v1.Q [20220814A]
+1. Add window shift
+
 ## 20220814A
 Autoloot_v1.Q [20220814A]
 1. Add gEnLootIdGroup_Weekend, the enable loot type 0 2 3 6
