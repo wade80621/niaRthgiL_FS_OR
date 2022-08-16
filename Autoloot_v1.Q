@@ -29,7 +29,8 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220814A":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220816A":1}=1 "Version"
+UserVar gEnterDelay = 50 "Enter Delay(ms)"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
 UserVar gEnLootType6=DropList{"Enable":1|"Disable":0}=1 "Enable LootType 6"
@@ -134,7 +135,9 @@ Function keyInLootId(uarLootId, uIdNumbers)
 		Call cmd_alootid()
 		KeyPress "Num +", 1
 		Call keyInNumber(uarLootId(uIndex))
+		Delay gEnterDelay
 		KeyPress "Enter", 1
+		Delay gEnterDelay
 		uIndex = uIndex + 1
 	Wend	
 End Function
@@ -143,7 +146,9 @@ Function keyInLootType(uarTypeId)
 		Call cmd_autoloottype()
 		KeyPress "Num +", 1
 		Call keyInNumber(uarTypeId)
+		Delay gEnterDelay
 		KeyPress "Enter", 1
+		Delay gEnterDelay
 End Function
 
 Function mainFunction()
@@ -153,7 +158,9 @@ Function mainFunction()
 	If(gEnAutoloot=1)
 		Call cmd_autoloot()
 		Call keyInNumber(gAutolootPercent)
+		Delay gEnterDelay
 		KeyPress "Enter", 1
+		Delay gEnterDelay
 	End If
 	
 	//** @autoloottype +6 ¥d¤ù

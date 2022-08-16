@@ -1,6 +1,10 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220816A
+Autoloot_v1.Q [20220816A]
+1. Add enter delay before and after the enter key in
+
 ## 20220815B
 刷材料_v4.Q [20220815B]
 1. Add script timer, will go home and stop the script when timeout.
