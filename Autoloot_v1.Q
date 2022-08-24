@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=856fcb21-747d-46b2-83ea-8a5a51f88241
 Description=Autoloot_v1
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=0
@@ -29,7 +29,7 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220816A":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220825A":1}=1 "Version"
 UserVar gEnterDelay = 50 "Enter Delay(ms)"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
@@ -42,6 +42,7 @@ UserVar gEnLootIdGroup_Weekend=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡G¶g¥½°Æ¥
 UserVar gEnLootIdGroup_Remorse=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡G®¬«ë"
 UserVar gEnLootIdGroup_EDDA=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡GEDDA"
 UserVar gEnLootIdGroup_AncientCity=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡G¥j«°¬D¾Ô"
+UserVar gEnLootIdGroup_StarTower=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡G¬P®y¤§¶ð"
 UserVar gEnLootIdGroup_Bossnia=DropList{"Enable":1|"Disable":0}=1 "°Æ¥»¡Gªi¤h¥§¨È"
 UserVar gEnLootIdGroup_MVP=DropList{"Enable":1|"Disable":0}=1 "MVP"
 UserVar gEnLootIdGroup_202207=DropList{"Enable":1|"Disable":0}=1 "¤C±m»â°ì¸H¤ù(202207·s¼W)"
@@ -231,6 +232,26 @@ Function mainFunction()
 		Call keyInLootId(uarLootId, 2)
 	End If
 	
+	//** ¬P®y¤§¶ð
+	//** @alootid +6697 ¤Û¤Æ¨t²Î§I´«¨é
+	//** @alootid +40306 ¶A©G´C¤¶
+	//** @alootid +12246 ¨ã¦³Å]¤Oªº¥d¤ù¥U¤l
+	//** @alootid +616 ¥d¥U
+	//** @alootid +607 ¤Ñ¦a¾ðªG¹ê
+	//** @alootid +751 «XÁÉ¨½´µ«½«½
+	//** @alootid +6423 ®ü¯«¤§¼««ã
+	//** @alootid +7211 Ã¹»|¶ð®ÉÀY¸H¤ù
+	//** @alootid +7108 ¬ÞµP¸H¤ù
+	//** @alootid +7036 ¥d­Û¤§¤ú
+	//** @alootid +7113 ¯}¸Hªk³Ò¤ý¶H¼x
+	//** @alootid +7754 ¯}¸Hªº¤ý«a
+	//** @alootid +7020 ´c¹Ú¤§¥Û
+	//** @alootid +7642 ªg¦åµw¹ô
+	If(gEnLootIdGroup_StarTower=1)
+		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 7642)
+		Call keyInLootId(uarLootId, 13)
+	End If
+	
 	//** ªi¤h¥§¨È
 	//** @alootid +6697 ¤Û¤Æ¨t²Î§I´«¨é
 	//** @alootid +40306 ¶A©G´C¤¶
@@ -245,10 +266,11 @@ Function mainFunction()
 	//** @alootid +7113 ¯}¸Hªk³Ò¤ý¶H¼x
 	//** @alootid +7754 ¯}¸Hªº¤ý«a
 	//** @alootid +7020 ´c¹Ú¤§¥Û
+	//** @alootid +7642 ªg¦åµw¹ô
 	//** @alootid +12612~12621 ¿ú³U
 	If(gEnLootIdGroup_Bossnia=1)
-		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 12616, 12617, 12618, 12619, 12620, 12621, 12612, 12613, 12614, 12615)
-		Call keyInLootId(uarLootId, 22)
+		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 7642, 12616, 12617, 12618, 12619, 12620, 12621, 12612, 12613, 12614, 12615)
+		Call keyInLootId(uarLootId, 23)
 	End If
 	
 	//** @alootid +6697 ¤Û¤Æ¨t²Î§I´«¨é

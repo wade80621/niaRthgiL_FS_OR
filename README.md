@@ -1,6 +1,10 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220825A
+Autoloot_v1.Q [20220825A]
+1. Add gEnLootIdGroup_StarTower(星座之塔)
+
 ## 20220816A
 Autoloot_v1.Q [20220816A]
 1. Add enter delay before and after the enter key in
