@@ -8,8 +8,8 @@ StopHotkey=122
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=a1ad0cf4-e753-4e31-971c-c8294353512e
-Description=刷經驗券_v1
+MacroID=c62a04d1-3aa7-4d10-9f02-8c1034e1e224
+Description=刷掉寶券_v1
 Enable=0
 AutoRun=0
 [Repeat]
@@ -34,7 +34,7 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220828A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220829A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gCharacterSlotX = 1056 "腳色Slot座標X（自行用抓抓找，預設為右下）"
@@ -55,8 +55,10 @@ gCreateCharXY = array(1127, 645)
 gCharacterXY = array(840, 520)
 // Go to City
 gMap1XY = array(1249, 517)
-gMap2XY = array(837, 187)
-gNewNPCXY = array(837, 187)
+// gMap2XY = array(837, 187)
+// gNewNPCXY = array(837, 187)
+gMap2XY = array(837, 166)
+gNewNPCXY = array(837, 166)
 // Store
 gCapraXY = array(525, 810)
 gCharManuXY = array(116, 165)
@@ -173,6 +175,8 @@ Function mainFunction()
 	MoveTo gMap1XY(0), gMap1XY(1)
 	Delay 25*gDelayMultiple
 	LeftClick 1
+	Delay 100*gDelayMultiple
+	LeftClick 1
 	Delay 5000 * gDelayMultiple
 	
 	// Move To NPC
@@ -202,6 +206,7 @@ Function mainFunction()
 	
 	// Open Bag
 	Call combo2Keys("Alt", "E")
+	Delay 250 * gDelayMultiple
 	// MoveTo gCharManuXY(0), gCharManuXY(1)
 	// Delay 25*gDelayMultiple
 	// LeftClick 1
@@ -216,7 +221,7 @@ Function mainFunction()
 	MoveTo gBagPage1XY(0), gBagPage1XY(1)
 	Delay 25 * gDelayMultiple
 	LeftClick 1
-	Delay 250 * gDelayMultiple
+	Delay 300 * gDelayMultiple
 	
 	// Store Item * 2
 	For (2)

@@ -1,6 +1,11 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220829A
+刷掉寶券_v1.Q [20220829A]
+1. Rename to 刷掉寶券_v1.Q
+2. Optimize
+
 ## 20220828B
 刷經驗券_v1.Q [20220828A]
 1. Add Script
