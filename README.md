@@ -1,6 +1,11 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220828B
+刷經驗券_v1.Q [20220828A]
+1. Add Script
+2. Please confirm all settings are correct.
+
 ## 20220828A
 刷材料_v4.Q [20220828A]
 1. Fix the second verify problem
