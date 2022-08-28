@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=856fcb21-747d-46b2-83ea-8a5a51f88241
 Description=Autoloot_v1
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0

@@ -34,7 +34,7 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220815B":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220828A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
@@ -313,7 +313,8 @@ Function mainFunction()
 			End If
 		End If
 		
-		If (uVerifyStatus>0) Then 
+		If (uVerifyStatus > 0) Then 
+			TracePrint uVerifyStatus
 			//** Click "Back" Buttom
 			MoveTo gBackButtomXY(0), gBackButtomXY(1)
 			Delay 25
@@ -322,6 +323,7 @@ Function mainFunction()
 			Delay 250
 			//** 尋找"外掛驗證裝置"
 			If (uVerifyStatus = 2) Then 
+				TracePrint uVerifyStatus
 				uWBreak=gStringTryCount
 				While(uWBreak>0)
 					FindPic gString1Coordinate(0),gString1Coordinate(1),gString1Coordinate(2),gString1Coordinate(3),"Attachment:\外掛驗證裝置.bmp",0.9,intX,intY
@@ -338,12 +340,14 @@ Function mainFunction()
 			End If
 			
 			If (uVerifyStatus = 3) Then 
+				TracePrint uVerifyStatus
 				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
 				uVerifyStatus = 4 // 4: To find "您好請您輸入外掛驗證"
 			End If
 			
 			//** 尋找"您好請您輸入外掛驗證"
 			If (uVerifyStatus = 4) Then 
+				TracePrint uVerifyStatus
 				uWBreak=gStringTryCount
 				While(uWBreak>0)
 					FindPic gString3Coordinate(0),gString3Coordinate(1),gString3Coordinate(2),gString3Coordinate(3),"Attachment:\您好請您輸入外掛驗證.bmp",0.9,intX,intY
@@ -367,6 +371,7 @@ Function mainFunction()
 			
 			//** Decode the code
 			If (uVerifyStatus = 5) Then 
+				TracePrint uVerifyStatus
 				Dim uPlaceIndex
 				Dim uNumIndex
 				Dim uResult
@@ -374,7 +379,8 @@ Function mainFunction()
 				Dim uLUY
 				Dim uRDX
 				Dim uRDY
-				
+
+				uPlaceIndex=0
 				For (6)
 					uLUX = gVCodeNum(0) + uPlaceIndex * gVCodeNumDelta
 					uLUY = gVCodeNum(1)
