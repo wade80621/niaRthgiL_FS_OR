@@ -1,6 +1,10 @@
 # RO_SF_LightRain
 For RO SF LightRain QuickMacroPortable_9 QMscripts
 
+## 20220901A
+霸肋門附魔_v1.Q
+1. Add Enchant Type
+
 ## 20220829A
 刷掉寶券_v1.Q [20220829A]
 1. Rename to 刷掉寶券_v1.Q
