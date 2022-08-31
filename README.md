@@ -5,7 +5,7 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 ![Note_快捷鍵配置](./Note_快捷鍵配置.jpg)<p>
 ![Note_倉庫視窗配置](./Note_倉庫視窗配置.jpg)<p>
 ![Note_視窗配置](./Note_視窗配置.jpg)<p>
-![Note_霸肋門附魔座位](./Note_霸肋門附魔座位.jpg)<p>
+![Note_霸肋門附魔配置](./Note_霸肋門附魔配置.jpg)<p>
 
 ## Release Note
 
