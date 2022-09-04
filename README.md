@@ -9,6 +9,15 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220904B
+刷材料_v5.Q [20220904B]
+1. Copy from 刷材料_v4.Q [20220904A]
+2. Add Multiple Process Feature, can run up to 3 charator with the same behavior
+
+ModifyWindowName_v1.Q [20220904A]
+1. Add ModifyWindowName_v1.Q to modify the window name for 刷材料_v5.Q
+
+
 ### 20220904A
 刷材料_v4.Q [20220904A]
 1. Modify Auto Store with Alt+RightClick
