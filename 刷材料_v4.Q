@@ -34,7 +34,7 @@ Call Plugin.Window.Move(hwnd, 0, 0)
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220828A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220904A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check in City"
@@ -155,6 +155,24 @@ Function dropAtoB(uAX, uAY, uBX, uBY)
 	Delay 350
 	LeftUp 1
 	Delay 250
+End Function
+
+Function comboKeyAndMouse(uKey, uMouse, uX, uY, uLoops, uDelay)	// uMouse: 0=Left; 1=Right
+	//Call Plugin.Bkgnd.KeyDown(hwnd, uKey)
+	KeyDown "Alt", 1
+	MoveTo uX, uY
+	Delay 50
+	For uLoops
+		If (uMouse = 0) Then 
+			LeftClick 1
+		Else
+			RightClick 1
+		End If
+		Delay uDelay
+	Next
+	//Call Plugin.Bkgnd.KeyUp(hwnd, uKey)
+	KeyUp "Alt", 1
+	Delay 50
 End Function
 
 Function findCoordinateNum(uLUX, uLUY, uRDX, uRDY, uNum)
@@ -448,11 +466,14 @@ Function mainFunction()
 			Delay 250
 			
 			// Store Item * gAutoStoreNum
+			Call comboKeyAndMouse(164, 1, gBagItem1XY(0), gBagItem1XY(1), gAutoStoreNum, 500)
+			/*
 			For gAutoStoreNum
 				Call dropAtoB(gBagItem1XY(0), gBagItem1XY(1), gStorehouseXY(0), gStorehouseXY(1))
 				Call Plugin.Bkgnd.KeyPress(hwnd, 13)
 				Delay 100
 			Next
+			*/
 			
 			// Close Store House
 			MoveTo gStorehouseCloseXY(0), gStorehouseCloseXY(1)

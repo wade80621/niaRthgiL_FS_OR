@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220904A
+刷材料_v4.Q [20220904A]
+1. Modify Auto Store with Alt+RightClick
+
 ### 20220901A
 霸肋門附魔_v1.Q
 1. Add Enchant Type
