@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=3f396d10-36f2-40a6-9a64-2d83cfeed021
 Description=¨ê§÷®Æ_v5
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0
@@ -30,7 +30,7 @@ UEsDBBQAAgAIAOx49VQTzuUSLQAAAMYAAAAFABEAMC5ibXBVVA0AB7pr2WK7a9liuWvZYnPyPcYAAWZA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220904B":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220905A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gEnCheckInCity = DropList{"Enable":1 | "Disable":0}=1 "Check NOT in City (Not support Multi Process)"
@@ -153,7 +153,8 @@ Function keyPressWithMultiWindow(uKey)
 		index=0
 		For gMultiProcNum
 			Call Plugin.Bkgnd.KeyPress(hwnds(index), uKey)
-			index=index+1
+			index = index + 1
+			Delay CInt(5 * Rnd)
 		Next
 	Else
 		Call Plugin.Bkgnd.KeyPress(hwnds(0), uKey)
@@ -349,7 +350,7 @@ Function mainFunction()
 			Next
 			
 			For gSkill2Loop
-				keyPressWithMultiWindow(Asc(gSkil2Key1))
+				keyPressWithMultiWindow(Asc(gSkillKey2))
 				If (gEnSkill2Ckick = 1) Then 
 					Delay 25
 					MoveTo gCharacterXY(0), gCharacterXY(1)

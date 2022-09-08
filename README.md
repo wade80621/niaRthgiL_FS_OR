@@ -9,6 +9,11 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220908A
+百館_v1.Q [20220908A]
+1. Add script
+2. Judge the map the attack
+
 ### 20220904B
 刷材料_v5.Q [20220904B]
 1. Copy from 刷材料_v4.Q [20220904A]

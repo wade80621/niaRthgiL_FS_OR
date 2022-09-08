@@ -280,7 +280,7 @@ Function mainFunction()
 			Next
 			
 			For gSkill2Loop
-				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkil2Key1))
+				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkillKey2))
 				If (gEnSkill2Ckick = 1) Then 
 					Delay 25
 					MoveTo gCharacterXY(0), gCharacterXY(1)
