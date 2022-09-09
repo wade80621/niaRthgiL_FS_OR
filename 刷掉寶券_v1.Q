@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=c62a04d1-3aa7-4d10-9f02-8c1034e1e224
 Description=刷掉寶券_v1
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=1
@@ -27,20 +27,20 @@ UEsDBBQAAgAIAOx49VQTzuUSLQAAAMYAAAAFABEAMC5ibXBVVA0AB7pr2WK7a9liuWvZYnPyPcYAAWZA
 
 
 [Script]
-//******** Windows
-hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
-Call Plugin.Window.Move(hwnd, 0, 0)
+
 
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220829A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220910A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
-UserVar gCharacterSlotX = 1056 "腳色Slot座標X（自行用抓抓找，預設為右下）"
-UserVar gCharacterSlotY = 721 "腳色Slot座標Y（自行用抓抓找，預設為右下）"
+UserVar gCharacterSlotX = 1056 "腳色Slot視窗座標X（自行用抓抓找，預設為右下）"
+UserVar gCharacterSlotY = 721 "腳色Slot視窗座標Y（自行用抓抓找，預設為右下）"
 UserVar gCharacterMark = "Z" "腳色名稱標籤，避免跟別人相同"
 UserVar gDelayMultiple = 1 "各步驟Delay倍率"
+UserVar gWindowOffsetX = 0 "Window Offset X"
+UserVar gWindowOffsetY = 0 "Window Offset Y"
 UserVar gCheckSetting = 0 "上面都確定設定好後，輸入46804706，腳本才會跑"
 
 //******** Parameters
@@ -49,34 +49,41 @@ cTrue = 1
 Dim cFalse
 cFalse = 0
 
+//******** Windows
+gWoff = array(gWindowOffsetX,gWindowOffsetY)
+hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
+Call Plugin.Window.Move(hwnd, gWoff(0), gWoff(1))
+gCharacterSlotX = gCharacterSlotX + gWoff(0)
+gCharacterSlotY = gCharacterSlotY + gWoff(1)
+
 //** Coordinate
 // Create character
-gCreateCharXY = array(1127, 645)
-gCharacterXY = array(840, 520)
+gCreateCharXY = array(1127+gWoff(0), 645+gWoff(1))
+gCharacterXY = array(840+gWoff(0), 520+gWoff(1))
 // Go to City
-gMap1XY = array(1249, 517)
-// gMap2XY = array(837, 187)
-// gNewNPCXY = array(837, 187)
-gMap2XY = array(837, 166)
-gNewNPCXY = array(837, 166)
+gMap1XY = array(1249+gWoff(0), 517+gWoff(1))
+// gMap2XY = array(837+gWoff(0), 187+gWoff(1))
+// gNewNPCXY = array(837+gWoff(0), 187+gWoff(1))
+gMap2XY = array(837+gWoff(0), 166+gWoff(1))
+gNewNPCXY = array(837+gWoff(0), 166+gWoff(1))
 // Store
-gCapraXY = array(525, 810)
-gCharManuXY = array(116, 165)
-gOpenBagXY = array(112, 200)
-gBagPage1XY = array(620, 905)
-gBagPage3XY = array(620, 970)
-gBagItem1XY = array(665, 905)
-gBagItem2XY = array(695, 905)
-gStorehouseXY = array(740, 740)
-gStorehouseCloseXY = array(850, 860)
+gCapraXY = array(525+gWoff(0), 810+gWoff(1))
+gCharManuXY = array(116+gWoff(0), 165+gWoff(1))
+gOpenBagXY = array(112+gWoff(0), 200+gWoff(1))
+gBagPage1XY = array(620+gWoff(0), 905+gWoff(1))
+gBagPage3XY = array(620+gWoff(0), 970+gWoff(1))
+gBagItem1XY = array(665+gWoff(0), 905+gWoff(1))
+gBagItem2XY = array(695+gWoff(0), 905+gWoff(1))
+gStorehouseXY = array(740+gWoff(0), 740+gWoff(1))
+gStorehouseCloseXY = array(850+gWoff(0), 860+gWoff(1))
 // Delete Character
-gBackToCharSelXY = array(844, 688)
-gDeleteChar1XY = array(1233, 558)
-gDeleteChar2XY = array(1233, 588)
-gCheckDelete = array(911, 583) 
+gBackToCharSelXY = array(844+gWoff(0), 688+gWoff(1))
+gDeleteChar1XY = array(1233+gWoff(0), 558+gWoff(1))
+gDeleteChar2XY = array(1233+gWoff(0), 588+gWoff(1))
+gCheckDelete = array(911+gWoff(0), 583+gWoff(1)) 
 gDelta = 1
 gStringTryCount = 10
-gDelCharCoordinate = array(1028-gDelta, 702-gDelta, 1088+gDelta, 902+gDelta)
+gDelCharCoordinate = array((1028+gWoff(0))-gDelta, (702+gWoff(1))-gDelta, (1088+gWoff(0))+gDelta, (902+gWoff(1))+gDelta)
 
 Function combo2Keys(ukey1, ukey2)
 	KeyDown ukey1, 1
