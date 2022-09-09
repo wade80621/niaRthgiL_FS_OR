@@ -9,6 +9,12 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220910A
+月餅_v1.Q [20220910A]
+1. Optimize
+百館_v1.Q [20220910A]
+1. 增加開館手
+
 ### 20220909A
 月餅_v1.Q [20220909A]
 1. Add script(For 9/9~9/18活動)

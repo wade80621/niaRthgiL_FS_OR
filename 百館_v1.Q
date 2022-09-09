@@ -23,18 +23,17 @@ SetupOCXFile=
 [Comment]
 
 [Attachment]
-UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kAGmNz8p3HyAAGZkCsAcQ8QMwFxIwMEmDxDKg8MnBxcZGQkBDAAYBSLmAwaNXw8JhzcMQCSTxqgAoYGFYBSfLMkZWVlcABgFJABWFhYS54AVABAFBLAQIXCxQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPAAkAAAAAAAAAIACAgQAAAACmysBdpmG5z1+kVy5ibXBVVAUAB5kAGmNQSwUGAAAAAAEAAQBGAAAAjgAAAAAA
+UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kAGmNz8p3HyAAGZkCsAcQ8QMwFxIwMEmDxDKg8MnBxcZGQkBDAAYBSLmAwaNXw8JhzcMQCSTxqgAoYGFYBSfLMkZWVlcABgFJABWFhYS54AVABAFBLAwQUAAIACAB6gSlVwtpWQnIAAAAiAwAADAARAKbKwF219KdQLmJtcFVUDQAHoWUbY3NmG2OgZRtjc/JVYmYAAzMg1gBiMSDmBmJGBgmw+BsmBgzwHQzQ2N9hAKsgshZs+iAMOInVPGwmYbUPTRyva5DtwyQxnM2AqRhbeOByBNagYsAOSDcDq0fxxgKmXwgCTGNwuANXssAaQtjCFJc78fuROHfgD1MkDwIAUEsBAhcLFAACAAgA6nUoVR6WlXxQAAAAngEAAA8ACQAAAAAAAAAgAICBAAAAAKbKwF2mYbnPX6RXLmJtcFVUBQAHmQAaY1BLAQIXCxQAAgAIAHqBKVXC2lZCcgAAACIDAAAMAAkAAAAAAAAAIACAgY4AAACmysBdtfSnUC5ibXBVVAUAB6FlG2NQSwUGAAAAAAIAAgCJAAAAOwEAAAAA
 
 
 [Script]
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220908A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220910A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
-// UserVar gAttackType = DropList{"純便當":0 | "開館手（還沒做）":1 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
-UserVar gAttackType = DropList{"純便當":0 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
+UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
 // UserVar gEnEnter = DropList{"Disable":0 | "Enable":1}=0 "自動進館（還沒做）"
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
@@ -55,7 +54,18 @@ UserVar gLoopRecovery = 11 "Loop and Recovery"
 gDelta = 1
 gFindImageTryCount = 10
 gMap1Coordinate = array(1585 - gDelta, 52 - gDelta, 1599 + gDelta, 65 + gDelta)
-gCharacterXY = array(840-50, 520)
+gNPC1Coordinate = array(27 - gDelta, 194 - gDelta, 48 + gDelta, 204 + gDelta)
+// gNPC1Coordinate = array(51 - gDelta, 194 - gDelta, 72 + gDelta, 204 + gDelta)
+gCharacterXY = array(840, 520)
+gSkillGroundOffsetX = 160
+
+
+Function keyLoops(uKey, uLoops, uDelay)
+	For uLoops
+		Call Plugin.Bkgnd.KeyPress(hwnd, uKey)
+		Delay uDelay
+	Next
+End Function
 
 
 //******** Windows
@@ -72,7 +82,7 @@ Function mainFunction()
 				Delay gSkill1Delay
 				If (gAttackType = 12) Then 
 					Delay 10
-					MoveTo gCharacterXY(0), gCharacterXY(1)
+					MoveTo (gCharacterXY(0)-gCharacterXY), gCharacterXY(1)
 					Delay 10
 					LeftClick 1
 				End If
@@ -81,7 +91,18 @@ Function mainFunction()
 					Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gRecoveryKey))
 					uRecoveryCount=0
 				End If
+			ElseIf (gAttackType = 1) Then
+				MoveTo gCharacterXY(0), gCharacterXY(1)
+				Delay 10
+				RightClick 1
+				Delay 50
+				FindPic gNPC1Coordinate(0),gNPC1Coordinate(1),gNPC1Coordinate(2),gNPC1Coordinate(3),"Attachment:\百館裁判.bmp",0.9,intX,intY
+				If intX > 0 And intY > 0 Then 
+					Call Plugin.Bkgnd.KeyPress(hwnd, 13)
+				End If
 			End If
+		ElseIf (gAttackType = 1) Then
+			ExitScript
 		End If
 	Wend	
 End Function

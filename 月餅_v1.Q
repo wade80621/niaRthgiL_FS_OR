@@ -30,24 +30,30 @@ UEsDBBQAAgAIAFJoKVWHI+1UNgAAAPYAAAAMABEApfqrQrrrxkYuYm1wVVQNAAeBORtjnzkbY4E5G2Nz
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220909A":1}=1 "Version"
-UserVar gNote = DropList{"2飛E打":1}=1 "Note"
+UserVar gScriptVersion = DropList{"20220910A":1}=1 "Version"
+UserVar gNote = DropList{"1補2飛E打":1}=1 "Note"
+//**** Options
+UserVar Options__ = DropList{"*********":1}=1 "** Options "
+UserVar gWindowOffsetX = 0 "Window Offset X"
+UserVar gWindowOffsetY = 0 "Window Offset Y"
 
 
 gCharacterXY = array(840, 520)
 gSearchRange = array(300, 200)
 
 //******** Windows
+gWindowOffset = array(gWindowOffsetX,gWindowOffsetY)
 hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
-Call Plugin.Window.Move(hwnd, 0, 0)
+Call Plugin.Window.Move(hwnd, gWindowOffset(0), gWindowOffset(1))
 
 
 Function mainFunction()
+	uLoopCnt = 0
 	While (1)
-		uLux = gCharacterXY(0) - gSearchRange(0)
-		uLuy = gCharacterXY(1) - gSearchRange(1)
-		uRdx = gCharacterXY(0) + gSearchRange(0)
-		uRdy = gCharacterXY(1) + gSearchRange(1)
+		uLux = gCharacterXY(0) - gSearchRange(0) + gWindowOffset(0)
+		uLuy = gCharacterXY(1) - gSearchRange(1) + gWindowOffset(1)
+		uRdx = gCharacterXY(0) + gSearchRange(0) + gWindowOffset(0)
+		uRdy = gCharacterXY(1) + gSearchRange(1) + gWindowOffset(1)
 		uFind = 0
 		uTargetX = 0
 		uTargetY = 0
@@ -89,9 +95,14 @@ Function mainFunction()
 			LeftClick 1
 			uFind=0
 		End If
-		Delay 500
+		Delay 450
 		Call Plugin.Bkgnd.KeyPress(hwnd, Asc("2"))
-		Delay 750
+		Delay 700
+		uLoopCnt = uLoopCnt + 1
+		If (uLoopCnt > 9) Then 
+			Call Plugin.Bkgnd.KeyPress(hwnd, Asc("1"))
+			uLoopCnt = 0
+		End If
 	Wend
 	
 End Function
