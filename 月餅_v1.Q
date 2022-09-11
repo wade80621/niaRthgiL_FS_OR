@@ -30,7 +30,7 @@ UEsDBBQAAgAIAFJoKVWHI+1UNgAAAPYAAAAMABEApfqrQrrrxkYuYm1wVVQNAAeBORtjnzkbY4E5G2Nz
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220910A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220911A":1}=1 "Version"
 UserVar gNote = DropList{"1¸É2­¸E¥´":1}=1 "Note"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
@@ -39,7 +39,7 @@ UserVar gWindowOffsetY = 0 "Window Offset Y"
 
 
 gCharacterXY = array(840, 520)
-gSearchRange = array(300, 200)
+gSearchRange = array(250, 200)
 
 //******** Windows
 gWindowOffset = array(gWindowOffsetX,gWindowOffsetY)
@@ -57,35 +57,45 @@ Function mainFunction()
 		uFind = 0
 		uTargetX = 0
 		uTargetY = 0
-		FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ªi§Q.bmp",0.5,intX,intY
-		If intX > 0 And intY > 0 Then 
-			uFind = 1
-			uTargetX = intX
-			uTargetY = intY
+		If uFind = 0 Then 	
+			FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ªi§Q.bmp",0.5,intX,intY
+			If intX > 0 And intY > 0 Then 
+				uFind = 1
+				uTargetX = intX
+				uTargetY = intY
+			End If
 		End If
-		FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\¸º.bmp",0.5,intX,intY
-		If intX > 0 And intY > 0 Then 
-			uFind = 1
-			uTargetX = intX
-			uTargetY = intY
+		If uFind = 0 Then 		
+			FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\¸º.bmp",0.5,intX,intY
+			If intX > 0 And intY > 0 Then 
+				uFind = 1
+				uTargetX = intX
+				uTargetY = intY
+			End If
 		End If
-		FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ºÆ¨ß.bmp",0.5,intX,intY
-		If intX > 0 And intY > 0 Then 
-			uFind = 1
-			uTargetX = intX
-			uTargetY = intY
+		If uFind = 0 Then 	
+			FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ºÆ¨ß.bmp",0.5,intX,intY
+			If intX > 0 And intY > 0 Then 
+				uFind = 1
+				uTargetX = intX
+				uTargetY = intY
+			End If
 		End If
-		FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ºñºøÂÎ.bmp",0.5,intX,intY
-		If intX > 0 And intY > 0 Then 
-			uFind = 1
-			uTargetX = intX
-			uTargetY = intY
+		If uFind = 0 Then 	
+			FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\ºñºøÂÎ.bmp",0.5,intX,intY
+			If intX > 0 And intY > 0 Then 
+				uFind = 1
+				uTargetX = intX
+				uTargetY = intY
+			End If
 		End If
-		FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\¥ú«BºëÆF.bmp",0.5,intX,intY
-		If intX > 0 And intY > 0 Then 
-			uFind = 1
-			uTargetX = intX
-			uTargetY = intY
+		If uFind = 0 Then 	
+			FindPic uLux, uLuy, uRdx, uRdy,"Attachment:\¥ú«BºëÆF.bmp",0.5,intX,intY
+			If intX > 0 And intY > 0 Then 
+				uFind = 1
+				uTargetX = intX
+				uTargetY = intY
+			End If
 		End If
 		If (uFind=1) Then 
 			Call Plugin.Bkgnd.KeyPress(hwnd, Asc("E"))
@@ -94,10 +104,10 @@ Function mainFunction()
 			Delay 10
 			LeftClick 1
 			uFind=0
+			Delay 550
 		End If
-		Delay 450
 		Call Plugin.Bkgnd.KeyPress(hwnd, Asc("2"))
-		Delay 700
+		Delay 650
 		uLoopCnt = uLoopCnt + 1
 		If (uLoopCnt > 9) Then 
 			Call Plugin.Bkgnd.KeyPress(hwnd, Asc("1"))

@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220911A
+月餅_v1.Q [20220911A]
+1. Optimize
+
 ### 20220910B
 刷掉寶券_v1.Q [20220910A]
 1. A window offset
