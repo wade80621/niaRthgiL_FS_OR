@@ -29,7 +29,7 @@ SetupOCXFile=
 
 //******** Parameter
 UserVar gScriptAuthor=DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion=DropList{"20220825A":1}=1 "Version"
+UserVar gScriptVersion=DropList{"20220912A":1}=1 "Version"
 UserVar gEnterDelay = 50 "Enter Delay(ms)"
 UserVar gEnAutoloot=DropList{"Enable":1|"Disable":0}=0 "Enable Autoloot"
 UserVar gAutolootPercent = 1 "Autoloot Percent"
@@ -247,9 +247,12 @@ Function mainFunction()
 	//** @alootid +7754 破碎的王冠
 	//** @alootid +7020 惡夢之石
 	//** @alootid +7642 沾血硬幣
+	//** @alootid +22687 邪念碎片
+	//** @alootid +23016 咒怨碎片
+	//** @alootid +12616 S級錢袋
 	If(gEnLootIdGroup_StarTower=1)
-		uarLootId = array(6697, 40306, 12246, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 7642)
-		Call keyInLootId(uarLootId, 13)
+		uarLootId = array(6697, 40306, 12246, 616, 607, 751, 6423, 7211, 7108, 7036, 7113, 7754, 7020, 7642, 22687, 23016, 12616)
+		Call keyInLootId(uarLootId, 17)
 	End If
 	
 	//** 波士尼亞
@@ -276,6 +279,7 @@ Function mainFunction()
 	//** @alootid +6697 幻化系統兌換券
 	//** @alootid +40306 詛咒媒介
 	//** @alootid +12246 具有魔力的卡片冊子
+	//** @alootid +616 卡冊
 	//** @alootid +607 天地樹果實
 	If(gEnLootIdGroup_MVP=1)
 		uarLootId = array(6697, 40306, 12246, 616, 607)

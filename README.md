@@ -9,6 +9,12 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220912A
+Autoloot_v1.Q [20220912A]
+1. Update list
+百館_v1.Q [20220912A]
+1. Optimize開館手
+
 ### 20220911A
 月餅_v1.Q [20220911A]
 1. Optimize

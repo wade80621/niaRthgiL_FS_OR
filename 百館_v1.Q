@@ -30,7 +30,7 @@ UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220910A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220912A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
@@ -73,7 +73,8 @@ hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
 Call Plugin.Window.Move(hwnd, 0, 0)
 
 Function mainFunction()
-	uRecoveryCount=0
+	uRecoveryCount = 0
+	uOpenLoopCnt = 0
 	While (1)
 		FindPic gMap1Coordinate(0),gMap1Coordinate(1),gMap1Coordinate(2),gMap1Coordinate(3),"Attachment:\百館地圖_上.bmp",0.9,intX,intY
 		If intX > 0 And intY > 0 Then 
@@ -92,13 +93,17 @@ Function mainFunction()
 					uRecoveryCount=0
 				End If
 			ElseIf (gAttackType = 1) Then
-				MoveTo gCharacterXY(0), gCharacterXY(1)
+				MoveTo gCharacterXY(0)+uOpenLoopCnt, gCharacterXY(1)
 				Delay 10
 				RightClick 1
 				Delay 50
 				FindPic gNPC1Coordinate(0),gNPC1Coordinate(1),gNPC1Coordinate(2),gNPC1Coordinate(3),"Attachment:\百館裁判.bmp",0.9,intX,intY
 				If intX > 0 And intY > 0 Then 
 					Call Plugin.Bkgnd.KeyPress(hwnd, 13)
+				End If
+				uOpenLoopCnt = uOpenLoopCnt + 1
+				If (uOpenLoopCnt = 3) Then 
+					uOpenLoopCnt = 0
 				End If
 			End If
 		ElseIf (gAttackType = 1) Then
