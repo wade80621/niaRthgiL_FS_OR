@@ -30,9 +30,12 @@ UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220912A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220920A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
+UserVar gWindowName = "Ragnarok" "Window Name"
+UserVar gWindowOffsetX = 0 "Window Offset X"
+UserVar gWindowOffsetY = 0 "Window Offset Y"
 UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
 // UserVar gEnEnter = DropList{"Disable":0 | "Enable":1}=0 "自動進館（還沒做）"
 //**** Keys
@@ -50,13 +53,19 @@ UserVar Loop__ = DropList{"*********":1}=1 "** Loop "
 UserVar gLoopRecovery = 11 "Loop and Recovery"
 
 
+
+//******** Windows
+gWindowOffset = array(gWindowOffsetX,gWindowOffsetY)
+hwnd = Plugin.Window.Find("Ragnarok", gWindowName)
+Call Plugin.Window.Move(hwnd, gWindowOffset(0), gWindowOffset(1))
+
 //** Coordinate
 gDelta = 1
 gFindImageTryCount = 10
-gMap1Coordinate = array(1585 - gDelta, 52 - gDelta, 1599 + gDelta, 65 + gDelta)
-gNPC1Coordinate = array(27 - gDelta, 194 - gDelta, 48 + gDelta, 204 + gDelta)
+gMap1Coordinate = array((1585+gWindowOffset(0)) - gDelta, (52+gWindowOffset(1)) - gDelta, (1599+gWindowOffset(0)) + gDelta, (65+gWindowOffset(1)) + gDelta)
+gNPC1Coordinate = array((27+gWindowOffset(0)) - gDelta, (194+gWindowOffset(1)) - gDelta, (48+gWindowOffset(0)) + gDelta, (204+gWindowOffset(1)) + gDelta)
 // gNPC1Coordinate = array(51 - gDelta, 194 - gDelta, 72 + gDelta, 204 + gDelta)
-gCharacterXY = array(840, 520)
+gCharacterXY = array(840+gWindowOffset(0), 520+gWindowOffset(1))
 gSkillGroundOffsetX = 160
 
 
@@ -66,11 +75,6 @@ Function keyLoops(uKey, uLoops, uDelay)
 		Delay uDelay
 	Next
 End Function
-
-
-//******** Windows
-hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
-Call Plugin.Window.Move(hwnd, 0, 0)
 
 Function mainFunction()
 	uRecoveryCount = 0
@@ -83,7 +87,7 @@ Function mainFunction()
 				Delay gSkill1Delay
 				If (gAttackType = 12) Then 
 					Delay 10
-					MoveTo (gCharacterXY(0)-gCharacterXY), gCharacterXY(1)
+					MoveTo (gCharacterXY(0)-gSkillGroundOffsetX), gCharacterXY(1)
 					Delay 10
 					LeftClick 1
 				End If

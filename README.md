@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220920A
+百館_v1.Q [20220920A]
+1. 增加視窗名稱判斷
+
 ### 20220912A
 Autoloot_v1.Q [20220912A]
 1. Update list
