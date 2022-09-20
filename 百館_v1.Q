@@ -30,13 +30,15 @@ UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220920A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220920B":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gWindowName = "Ragnarok" "Window Name"
 UserVar gWindowOffsetX = 0 "Window Offset X"
 UserVar gWindowOffsetY = 0 "Window Offset Y"
-UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
+UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地旋轉（不打不點）":2 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
+UserVar gRotationR = 9 "原地旋轉半徑 n 格RO格"
+UserVar gRotationDelay = 25 "原地旋轉延遲(ms)"
 // UserVar gEnEnter = DropList{"Disable":0 | "Enable":1}=0 "自動進館（還沒做）"
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
@@ -67,6 +69,7 @@ gNPC1Coordinate = array((27+gWindowOffset(0)) - gDelta, (194+gWindowOffset(1)) -
 // gNPC1Coordinate = array(51 - gDelta, 194 - gDelta, 72 + gDelta, 204 + gDelta)
 gCharacterXY = array(840+gWindowOffset(0), 520+gWindowOffset(1))
 gSkillGroundOffsetX = 160
+gPixelPerRoBox = 37
 
 
 Function keyLoops(uKey, uLoops, uDelay)
@@ -78,9 +81,14 @@ End Function
 
 Function mainFunction()
 	uRecoveryCount = 0
-	uOpenLoopCnt = 0
+	uOpenLoopCnt = 0	// 開館手
+	uRotationCount = 0	// 原地旋轉（不打不點）
+	uRotationX = gRotationR * gPixelPerRoBox
+	uRotationY = 0
+	uRotationDirX = -1
+	uRotationDirY = 1
 	While (1)
-		FindPic gMap1Coordinate(0),gMap1Coordinate(1),gMap1Coordinate(2),gMap1Coordinate(3),"Attachment:\百館地圖_上.bmp",0.9,intX,intY
+		FindPic gMap1Coordinate(0), gMap1Coordinate(1), gMap1Coordinate(2), gMap1Coordinate(3), "Attachment:\百館地圖_上.bmp", 0.9, intX, intY
 		If intX > 0 And intY > 0 Then 
 			If (gAttackType > 10) Then 
 				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkillKey1))
@@ -96,7 +104,7 @@ Function mainFunction()
 					Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gRecoveryKey))
 					uRecoveryCount=0
 				End If
-			ElseIf (gAttackType = 1) Then
+			ElseIf (gAttackType = 1) Then	// 開館手
 				MoveTo gCharacterXY(0)+uOpenLoopCnt, gCharacterXY(1)
 				Delay 10
 				RightClick 1
@@ -109,6 +117,17 @@ Function mainFunction()
 				If (uOpenLoopCnt = 3) Then 
 					uOpenLoopCnt = 0
 				End If
+			ElseIf (gAttackType = 2) Then	// 原地旋轉（不打不點）
+				MoveTo (gCharacterXY(0) + uRotationX), (gCharacterXY(1) + uRotationY)
+				uRotationX = uRotationX + uRotationDirX * gPixelPerRoBox
+				uRotationY = uRotationY + uRotationDirY * gPixelPerRoBox
+				If ((uRotationCount Mod (gRotationR * 2)) = (gRotationR * 2 - 1)) Then 
+					uRotationDirX = uRotationDirX * -1
+				ElseIf (((uRotationCount+gRotationR) Mod (gRotationR * 2)) = (gRotationR * 2 - 1)) Then 
+					uRotationDirY = uRotationDirY * -1
+				End If
+				uRotationCount = uRotationCount + 1
+				Delay gRotationDelay
 			End If
 		ElseIf (gAttackType = 1) Then
 			ExitScript

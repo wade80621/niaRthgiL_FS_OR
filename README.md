@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220920C
+百館_v1.Q [20220920B]
+1. 增加"原地旋轉（不打不點）"，主要讓咒術自己去點地（目前是以菱形的方式旋轉）
+
 ### 20220920B
 1. Add RO_Plugins, just copy the contents to LightRain
 
