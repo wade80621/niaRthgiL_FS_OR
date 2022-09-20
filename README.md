@@ -9,6 +9,9 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220920B
+1. Add RO_Plugins, just copy the contents to LightRain
+
 ### 20220920A
 百館_v1.Q [20220920A]
 1. 增加視窗名稱判斷
