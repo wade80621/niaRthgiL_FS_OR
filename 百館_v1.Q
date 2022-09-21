@@ -30,15 +30,17 @@ UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220920B":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220922A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gWindowName = "Ragnarok" "Window Name"
 UserVar gWindowOffsetX = 0 "Window Offset X"
 UserVar gWindowOffsetY = 0 "Window Offset Y"
+UserVar gWindowAmp = 100 "螢幕解析度比例(%)"
 UserVar gAttackType = DropList{"純便當":0 | "開館手":1 | "原地旋轉（不打不點）":2 | "原地一直打":11 | "點地一直打":12}=0 "攻擊方式"
 UserVar gRotationR = 9 "原地旋轉半徑 n 格RO格"
 UserVar gRotationDelay = 25 "原地旋轉延遲(ms)"
+UserVar gBypassMapCheck = DropList{"Disable":0 | "Enable":1}=1 "確認地圖"
 // UserVar gEnEnter = DropList{"Disable":0 | "Enable":1}=0 "自動進館（還沒做）"
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
@@ -57,19 +59,20 @@ UserVar gLoopRecovery = 11 "Loop and Recovery"
 
 
 //******** Windows
-gWindowOffset = array(gWindowOffsetX,gWindowOffsetY)
+gWindowAmp = gWindowAmp/100
+gWindowOffset = array(gWindowOffsetX*gWindowAmp,gWindowOffsetY*gWindowAmp)
 hwnd = Plugin.Window.Find("Ragnarok", gWindowName)
 Call Plugin.Window.Move(hwnd, gWindowOffset(0), gWindowOffset(1))
 
 //** Coordinate
 gDelta = 1
 gFindImageTryCount = 10
-gMap1Coordinate = array((1585+gWindowOffset(0)) - gDelta, (52+gWindowOffset(1)) - gDelta, (1599+gWindowOffset(0)) + gDelta, (65+gWindowOffset(1)) + gDelta)
-gNPC1Coordinate = array((27+gWindowOffset(0)) - gDelta, (194+gWindowOffset(1)) - gDelta, (48+gWindowOffset(0)) + gDelta, (204+gWindowOffset(1)) + gDelta)
+gMap1Coordinate = array((1585*gWindowAmp+gWindowOffset(0)) - gDelta, (52*gWindowAmp+gWindowOffset(1)) - gDelta, (1599*gWindowAmp+gWindowOffset(0)) + gDelta, (65*gWindowAmp+gWindowOffset(1)) + gDelta)
+gNPC1Coordinate = array((27*gWindowAmp+gWindowOffset(0)) - gDelta, (194*gWindowAmp+gWindowOffset(1)) - gDelta, (48*gWindowAmp+gWindowOffset(0)) + gDelta, (204*gWindowAmp+gWindowOffset(1)) + gDelta)
 // gNPC1Coordinate = array(51 - gDelta, 194 - gDelta, 72 + gDelta, 204 + gDelta)
-gCharacterXY = array(840+gWindowOffset(0), 520+gWindowOffset(1))
-gSkillGroundOffsetX = 160
-gPixelPerRoBox = 37
+gCharacterXY = array(840*gWindowAmp+gWindowOffset(0), 520*gWindowAmp+gWindowOffset(1))
+gSkillGroundOffsetX = 160*gWindowAmp
+gPixelPerRoBox = 37*gWindowAmp
 
 
 Function keyLoops(uKey, uLoops, uDelay)
@@ -88,7 +91,12 @@ Function mainFunction()
 	uRotationDirX = -1
 	uRotationDirY = 1
 	While (1)
-		FindPic gMap1Coordinate(0), gMap1Coordinate(1), gMap1Coordinate(2), gMap1Coordinate(3), "Attachment:\百館地圖_上.bmp", 0.9, intX, intY
+		If (gBypassMapCheck = 1) Then 
+			FindPic gMap1Coordinate(0), gMap1Coordinate(1), gMap1Coordinate(2), gMap1Coordinate(3), "Attachment:\百館地圖_上.bmp", 0.9, intX, intY
+		Else
+			intX = 1
+			intY = 1
+		End If
 		If intX > 0 And intY > 0 Then 
 			If (gAttackType > 10) Then 
 				Call Plugin.Bkgnd.KeyPress(hwnd, Asc(gSkillKey1))
