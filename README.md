@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220923A
+霸肋門附魔_v1.Q [20220923A]
+1. Add window offset
+
 ### 20220922A
 百館_v1.Q [20220922A]
 1. Add gWindowAmp and gBypassMapCheck

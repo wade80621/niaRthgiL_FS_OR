@@ -27,18 +27,23 @@ UEsDBBQAAgAIAOx49VQTzuUSLQAAAMYAAAAFABEAMC5ibXBVVA0AB7pr2WK7a9liuWvZYnPyPcYAAWZA
 
 
 [Script]
-//******** Windows
-hwnd = Plugin.Window.Find("Ragnarok", "Ragnarok")
-Call Plugin.Window.Move(hwnd, 0, 0)
 
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220831A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220923A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
+UserVar gWindowName = "Ragnarok" "Window Name"
+UserVar gWindowOffsetX = 0 "Window Offset X"
+UserVar gWindowOffsetY = 0 "Window Offset Y"
 UserVar gEquipmentNum = DropList{"身體":0 | "披肩":1 | "鞋子":2}=0 "霸肋門裝備位置"
 UserVar gEnchantType = DropList{"霸肋門德的集中":0 | "霸肋門德的智慧":1}=0 "霸肋門附魔種類"
+
+//******** Windows
+gWindowOffset = array(gWindowOffsetX,gWindowOffsetY)
+hwnd = Plugin.Window.Find("Ragnarok", gWindowName)
+Call Plugin.Window.Move(hwnd, gWindowOffset(0), gWindowOffset(1))
 
 //******** Parameters
 Dim cTrue
@@ -46,10 +51,10 @@ cTrue = 1
 Dim cFalse
 cFalse = 0
 
-gCharacterXY = array(840, 520)
-gTargetNpcXY = array(810, 520)
-gCheckArea = array(840, 770, 890, 810)	// LUX, LUY, RDX, RDY
-gBagItem1XY = array(665, 905)
+gCharacterXY = array(840+gWindowOffset(0), 520+gWindowOffset(1))
+gTargetNpcXY = array(810+gWindowOffset(0), 520+gWindowOffset(1))
+gCheckArea = array(840+gWindowOffset(0), 770+gWindowOffset(1), 890+gWindowOffset(0), 810+gWindowOffset(1))	// LUX, LUY, RDX, RDY
+gBagItem1XY = array(665+gWindowOffset(0), 905+gWindowOffset(1))
 
 
 Function keyLoops(uKey, uLoops, uDelay)
