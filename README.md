@@ -9,6 +9,10 @@ For RO SF LightRain QuickMacroPortable_9 QMscripts
 
 ## Release Note
 
+### 20220925A
+百館_v1.Q [20220925A]
+1. Add Charater offset
+
 ### 20220923A
 霸肋門附魔_v1.Q [20220923A]
 1. Add window offset

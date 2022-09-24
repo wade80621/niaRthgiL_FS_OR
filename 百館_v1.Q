@@ -10,7 +10,7 @@ RunOnce=1
 EnableWindow=
 MacroID=5195ece6-8a47-4b04-8758-2dacb25ca7a4
 Description=百館_v1
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=1
@@ -30,7 +30,7 @@ UEsDBBQAAgAIAOp1KFUelpV8UAAAAJ4BAAAPABEApsrAXaZhuc9fpFcuYm1wVVQNAAeZABpj0wQaY5kA
 //******** User Parameters
 UserVar About__ = DropList{"*********":1}=1 "** About "
 UserVar gScriptAuthor = DropList{"Wade.Yeh":1}=1 "Author"
-UserVar gScriptVersion = DropList{"20220922A":1}=1 "Version"
+UserVar gScriptVersion = DropList{"20220925A":1}=1 "Version"
 //**** Options
 UserVar Options__ = DropList{"*********":1}=1 "** Options "
 UserVar gWindowName = "Ragnarok" "Window Name"
@@ -42,6 +42,8 @@ UserVar gRotationR = 9 "原地旋轉半徑 n 格RO格"
 UserVar gRotationDelay = 25 "原地旋轉延遲(ms)"
 UserVar gBypassMapCheck = DropList{"Disable":0 | "Enable":1}=1 "確認地圖"
 // UserVar gEnEnter = DropList{"Disable":0 | "Enable":1}=0 "自動進館（還沒做）"
+UserVar gCharaterOffsetX = 0 "Charater Offset X"
+UserVar gCharaterOffsetY = 0 "Charater Offset Y"
 //**** Keys
 UserVar Keys__ = DropList{"*********":1}=1 "** Keys "
 UserVar gRecoveryKey = "1" "Recovery Key(0-9 A-Z)"
@@ -70,7 +72,7 @@ gFindImageTryCount = 10
 gMap1Coordinate = array((1585*gWindowAmp+gWindowOffset(0)) - gDelta, (52*gWindowAmp+gWindowOffset(1)) - gDelta, (1599*gWindowAmp+gWindowOffset(0)) + gDelta, (65*gWindowAmp+gWindowOffset(1)) + gDelta)
 gNPC1Coordinate = array((27*gWindowAmp+gWindowOffset(0)) - gDelta, (194*gWindowAmp+gWindowOffset(1)) - gDelta, (48*gWindowAmp+gWindowOffset(0)) + gDelta, (204*gWindowAmp+gWindowOffset(1)) + gDelta)
 // gNPC1Coordinate = array(51 - gDelta, 194 - gDelta, 72 + gDelta, 204 + gDelta)
-gCharacterXY = array(840*gWindowAmp+gWindowOffset(0), 520*gWindowAmp+gWindowOffset(1))
+gCharacterXY = array((840+gCharaterOffsetX)*gWindowAmp+gWindowOffset(0), (520+gCharaterOffsetY)*gWindowAmp+gWindowOffset(1))
 gSkillGroundOffsetX = 160*gWindowAmp
 gPixelPerRoBox = 37*gWindowAmp
 
